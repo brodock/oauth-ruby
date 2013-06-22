@@ -1,11 +1,20 @@
-require 'test/unit'
 require 'rubygems'
+require 'bundler'
+begin
+  Bundler.setup(:default, :development, :test)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts 'Run `bundle install` to install missing gems'
+  exit e.status_code
+end
+require 'test/unit'
 
-$LOAD_PATH << File.dirname(__FILE__) + '/../lib/'
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+Bundler.require(:default, :test)
+
 require 'oauth'
-require 'mocha'
 require 'stringio'
-require 'webmock'
 
 class Test::Unit::TestCase
   include WebMock::API
