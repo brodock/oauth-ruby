@@ -19,7 +19,8 @@ module OAuth::RequestProxy::Typhoeus
     proxies Typhoeus::Request
 
     def method
-      request.options[:method].to_s.upcase
+      method = request.options[:method] || 'get'
+      method.to_s.upcase
     end
 
     def uri
@@ -30,7 +31,7 @@ module OAuth::RequestProxy::Typhoeus
       if options[:clobber_request]
         options[:parameters]
       else
-        post_parameters.merge(query_parameters).merge(options[:parameters] || {})
+        query_parameters.merge(post_parameters).merge(options[:parameters] || {})
       end
     end
 
