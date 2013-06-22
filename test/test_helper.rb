@@ -14,6 +14,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 Bundler.require(:default, :test)
 
 require 'oauth'
+require 'mocha/setup'
 require 'stringio'
 
 class Test::Unit::TestCase
